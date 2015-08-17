@@ -97,10 +97,10 @@ bvToByteString bv
   | size > 0 = byte `BS.cons` bvToByteString rest
   | otherwise = BS.empty
   where byte = fromIntegral . BV.nat . BV.most chunk $ bv
-        rest | size - chunk > 0 = BV.least (size - chunk) bv -- (max (size - 1 - chunk) 0)
+        rest | size - chunk > 0 = BV.least (size - chunk) bv
              | otherwise = BV.zeros 0
         size = BV.size bv
-        chunk = 8 -- min 8 size
+        chunk = 8
 
 decrypt :: BitVector -> String -> ByteString
 decrypt k = bvToByteString . snd . foldl' g (keyToBV passphrase, BV.zeros 0)
